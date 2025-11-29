@@ -6,7 +6,7 @@ A browser-based web application that displays the full historical price of **Gol
 
 ## Features
 
-- **Full Historical Gold Price Data**: Weekly OHLC data from 1971 to 2025
+- **Real Historical Gold Price Data**: Weekly OHLC data from Yahoo Finance (2000-2025)
 - **Interactive Candlestick Chart**: Built with TradingView Lightweight Charts v4+
 - **Multiple Curve-Fitting Strategies**:
   - Power-Law Regression (default)
@@ -50,10 +50,11 @@ Then navigate to `http://localhost:3000`
 ├── index.html          # Main HTML container
 ├── script.js           # React app with curve fitting algorithms
 ├── styles.css          # Styling
-├── gold-data.json      # Historical gold price data (1971-2025)
+├── gold-data.json      # Real historical gold price data (2000-2025)
 ├── README.md           # This file
-└── experiments/        # Data generation scripts
-    └── generate_gold_data.py
+└── experiments/        # Data download and analysis scripts
+    ├── download_gold_data.py    # Download real data from Yahoo Finance
+    └── generate_gold_data.py    # Legacy script for synthetic data (deprecated)
 ```
 
 ## Curve-Fitting Strategies
@@ -99,9 +100,23 @@ const CONFIG = {
 };
 ```
 
+## Downloading Real Data
+
+The included `gold-data.json` file contains real historical gold price data from Yahoo Finance. To update or re-download the data:
+
+```bash
+# Install required dependencies
+pip install yfinance pandas
+
+# Run the download script
+python experiments/download_gold_data.py
+```
+
+This will download weekly OHLC data from Yahoo Finance and save it to `gold-data.json`.
+
 ## Data Format
 
-The `gold-data.json` file contains OHLC data in the following format:
+The `gold-data.json` file contains real OHLC data in the following format:
 
 ```json
 [
@@ -134,4 +149,5 @@ This project is released into the public domain under the [Unlicense](LICENSE).
 
 - [Power Law - Wikipedia](https://en.wikipedia.org/wiki/Power_law)
 - [TradingView Lightweight Charts](https://www.tradingview.com/lightweight-charts/)
-- [Gold Historical Prices](https://www.investing.com/currencies/xau-usd-historical-data)
+- [Yahoo Finance](https://finance.yahoo.com/) - Data source for historical gold prices
+- [yfinance Python Library](https://github.com/ranaroussi/yfinance) - Used for downloading market data
