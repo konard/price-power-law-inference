@@ -126,14 +126,6 @@ From all detected swing lows, the N lowest values are selected for curve fitting
 - **TradingView Lightweight Charts v4.1** (via CDN)
 - **Babel** (for JSX transformation in browser)
 
-## Browser Compatibility
-
-Works in all modern browsers that support ES6+:
-- Chrome 60+
-- Firefox 55+
-- Safari 11+
-- Edge 79+
-
 ## License
 
 This project is released into the public domain under the [Unlicense](LICENSE).
