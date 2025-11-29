@@ -137,3 +137,9 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Playwright MCP testing artifacts
+.playwright-mcp/
+
+# Local development files
+server.log
