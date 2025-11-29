@@ -6,7 +6,7 @@ A browser-based web application that displays the full historical price of **Gol
 
 ## Features
 
-- **Real Historical Gold Price Data**: Weekly OHLC data from Yahoo Finance (2000-2025)
+- **Real Historical Gold Price Data**: 768 years of data from Free Gold API (1258-2025)
 - **Interactive Candlestick Chart**: Built with TradingView Lightweight Charts v4+
 - **Multiple Curve-Fitting Strategies**:
   - Power-Law Regression (default)
@@ -50,11 +50,12 @@ Then navigate to `http://localhost:3000`
 ├── index.html          # Main HTML container
 ├── script.js           # React app with curve fitting algorithms
 ├── styles.css          # Styling
-├── gold-data.json      # Real historical gold price data (2000-2025)
+├── gold-data.json      # Real historical gold price data (1258-2025, 1,711 data points)
 ├── README.md           # This file
 └── experiments/        # Data download and analysis scripts
-    ├── download_gold_data.py    # Download real data from Yahoo Finance
-    └── generate_gold_data.py    # Legacy script for synthetic data (deprecated)
+    ├── download_gold_data_freegoldapi.py  # Download historical data from Free Gold API (768 years)
+    ├── download_gold_data.py              # Download data from Yahoo Finance (2000-2025)
+    └── generate_gold_data.py              # Legacy script for synthetic data (deprecated)
 ```
 
 ## Curve-Fitting Strategies
@@ -102,7 +103,24 @@ const CONFIG = {
 
 ## Downloading Real Data
 
-The included `gold-data.json` file contains real historical gold price data from Yahoo Finance. To update or re-download the data:
+The included `gold-data.json` file contains 768 years of historical gold price data from Free Gold API (1258-2025). To update or re-download the data:
+
+### Option 1: Free Gold API (Longest Historical Data - Recommended)
+
+```bash
+# No dependencies required - uses curl
+python experiments/download_gold_data_freegoldapi.py
+```
+
+This will download 1,711+ data points spanning from 1258 to 2025, sourced from:
+- Yahoo Finance (daily prices, 2000+)
+- World Bank (monthly prices)
+- MeasuringWorth London & British (annual historical prices back to 1258)
+
+**Data Coverage**: 1258-2025 (768 years)
+**Source**: [Free Gold API](https://freegoldapi.com/)
+
+### Option 2: Yahoo Finance (Recent Data Only)
 
 ```bash
 # Install required dependencies
@@ -112,11 +130,11 @@ pip install yfinance pandas
 python experiments/download_gold_data.py
 ```
 
-This will download weekly OHLC data from Yahoo Finance and save it to `gold-data.json`.
+This will download weekly OHLC data from Yahoo Finance (2000-2025 only).
 
 ## Data Format
 
-The `gold-data.json` file contains real OHLC data in the following format:
+The `gold-data.json` file contains historical gold price data in OHLC format:
 
 ```json
 [
@@ -124,6 +142,8 @@ The `gold-data.json` file contains real OHLC data in the following format:
   ...
 ]
 ```
+
+**Note**: For historical data from Free Gold API (pre-2000), only single price points are available, so open, high, low, and close values are all set to the same price. This is a standard practice for historical datasets that only include closing prices.
 
 ## Technical Implementation
 
@@ -149,5 +169,6 @@ This project is released into the public domain under the [Unlicense](LICENSE).
 
 - [Power Law - Wikipedia](https://en.wikipedia.org/wiki/Power_law)
 - [TradingView Lightweight Charts](https://www.tradingview.com/lightweight-charts/)
-- [Yahoo Finance](https://finance.yahoo.com/) - Data source for historical gold prices
-- [yfinance Python Library](https://github.com/ranaroussi/yfinance) - Used for downloading market data
+- [Free Gold API](https://freegoldapi.com/) - Primary data source for historical gold prices (1258-2025)
+- [Yahoo Finance](https://finance.yahoo.com/) - Alternative data source for recent gold prices
+- [yfinance Python Library](https://github.com/ranaroussi/yfinance) - Used for downloading Yahoo Finance data
